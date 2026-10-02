@@ -153,7 +153,7 @@
                             <option value="Organizacional">Psicología Organizacional</option>
                             <option value="Educativa">Psicología Educativa</option>
                             <option value="Deportiva">Psicología Deportiva</option>
-                            <option value="Otra">Otra área</option>
+                            <option value="Salud">Psicología de la Salud</option>
                         </select>
                     </div>
 
@@ -165,7 +165,6 @@
                             <option value="Voluntariado">Voluntariado</option>
                             <option value="Investigación">Investigación</option>
                             <option value="Empleo">Empleo / Practicante Pro</option>
-                            <option value="Desarrollo de Competencias Profesionales">Desarrollo de Competencias Profesionales / DCP</option>
                         </select>
                     </div>
 
@@ -178,6 +177,14 @@
                             <option value="Remoto">Remoto</option>
                         </select>
                     </div>
+                </div>
+
+                <!-- Clear Filters Action Bar -->
+                <div class="flex flex-col sm:flex-row justify-between items-center pt-3 border-t border-brand-lila/30 gap-2">
+                    <span class="text-xs text-slate-500 font-medium">Filtra por palabra clave, área, tipo o modalidad de la oportunidad.</span>
+                    <button onclick="resetFilters()" class="text-xs font-bold text-brand-fucsia bg-brand-fucsialight hover:bg-brand-fucsia hover:text-white px-4 py-2 rounded-xl transition-all flex items-center gap-1.5 cursor-pointer shadow-2xs">
+                        <i class="fa-solid fa-filter-circle-xmark"></i> Quitar todos los filtros
+                    </button>
                 </div>
             </div>
 
@@ -235,7 +242,6 @@
                                 <option value="Voluntariado">Voluntariado</option>
                                 <option value="Investigación">Investigación</option>
                                 <option value="Empleo">Empleo / Practicante Pro</option>
-                                <option value="Desarrollo de Competencias Profesionales">Desarrollo de Competencias Profesionales / DCP</option>
                             </select>
                         </div>
                         <div>
@@ -288,7 +294,7 @@
                             </label>
                         </div>
                     </div>
-                    
+
                     <!-- Datos del Estudiante Proponente -->
                     <div class="border-t border-brand-lila/50 pt-4 space-y-3 bg-brand-fucsialight/30 p-4 rounded-2xl border border-brand-fucsia/20">
                         <span class="block text-xs font-black text-brand-fucsia uppercase tracking-wider">Tus Datos como Estudiante Proponente (Obligatorio)</span>
@@ -376,6 +382,7 @@
                     <span id="modal-detail-area" class="text-xs font-black px-3 py-1 rounded-full border bg-brand-fucsialight text-brand-fucsia border-brand-fucsia/30">Área</span>
                     <span id="modal-detail-tipo" class="text-xs font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-600">Tipo</span>
                     <span id="modal-detail-modalidad" class="text-xs font-bold px-3 py-1 rounded-full bg-brand-lilaghost text-brand-dark">Modalidad</span>
+                    <span id="modal-detail-validation-badge"></span>
                 </div>
                 <div>
                     <h3 id="modal-detail-puesto" class="text-xl sm:text-2xl font-black text-brand-dark leading-snug">Puesto</h3>
@@ -398,9 +405,7 @@
 
                 <div class="space-y-2">
                     <span class="block text-xs font-black text-brand-dark uppercase tracking-wider">Medios de Contacto Institucional</span>
-                    <div id="modal-detail-contacts" class="flex flex-wrap gap-2 pt-1">
-                        <!-- Generado dinámicamente -->
-                    </div>
+                    <div id="modal-detail-contacts" class="flex flex-wrap gap-2 pt-1"></div>
                 </div>
 
                 <div id="modal-detail-student-box" class="hidden bg-brand-fucsialight/70 border border-brand-fucsia/30 rounded-2xl p-4 space-y-2">
@@ -465,7 +470,6 @@
                             <option value="Voluntariado">Voluntariado</option>
                             <option value="Investigación">Investigación</option>
                             <option value="Empleo">Empleo / Practicante Pro</option>
-                            <option value="Desarrollo de Competencias Profesionales">Desarrollo de Competencias Profesionales / DCP</option>
                         </select>
                     </div>
                     <div>
@@ -495,6 +499,13 @@
                         <input type="text" id="edit-contacto_telefono" placeholder="Teléfono" class="w-full p-2 bg-brand-lilaghost/30 border border-brand-lila/50 rounded-lg text-xs focus:outline-none focus:border-brand-fucsia">
                         <input type="url" id="edit-contacto_web" placeholder="Web / Red" class="w-full p-2 bg-brand-lilaghost/30 border border-brand-lila/50 rounded-lg text-xs focus:outline-none focus:border-brand-fucsia">
                     </div>
+                </div>
+
+                <div class="pt-2 bg-brand-verde/10 p-3 rounded-xl border border-brand-verde/30 flex items-center gap-2">
+                    <input type="checkbox" id="edit-validado_universidad" value="si" class="w-4 h-4 text-brand-verde rounded border-brand-lila focus:ring-brand-verde cursor-pointer accent-brand-verde">
+                    <label for="edit-validado_universidad" class="text-xs font-semibold text-slate-700 cursor-pointer">
+                        ✅ Validado por UPCH para horas académicas / voluntariado
+                    </label>
                 </div>
 
                 <div class="pt-3 flex justify-between items-center border-t border-brand-lila/40">
@@ -530,7 +541,7 @@
     <!-- JAVASCRIPT LOGIC -->
     <script>
         const ADMIN_PIN = "ceps2026";
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyQOX3wTGbGVSWIlO867GY9E8jZ-rJ8cHaxKRwfgEeqIlnM_GC6nqzKxoFI_fjpRI-v/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzzk9cThmashkng78RN60hUHSXV8YeYLEHMGyy2YXILVatGPmFBxsEFL8eb5UKM3yqh/exec";
 
         let rawData = [];
         let currentRole = 'estudiante';
@@ -649,6 +660,16 @@
             renderGrid(filtered);
         }
 
+        // FUNCIÓN PARA QUITAR TODOS LOS FILTROS
+        function resetFilters() {
+            document.getElementById('search-input').value = '';
+            document.getElementById('filter-area').value = '';
+            document.getElementById('filter-tipo').value = '';
+            document.getElementById('filter-modalidad').value = '';
+            applyFilters();
+            showToast("Filtros restablecidos");
+        }
+
         function renderGrid(list) {
             const grid = document.getElementById('opportunities-grid');
             const emptyState = document.getElementById('empty-state');
@@ -664,7 +685,7 @@
 
             list.forEach(item => {
                 const card = document.createElement('div');
-                card.className = "bg-white rounded-2xl border border-brand-lila/60 shadow-xs hover:shadow-md hover:border-brand-funsia transition-all p-5 flex flex-col justify-between cursor-pointer group";
+                card.className = "bg-white rounded-2xl border border-brand-lila/60 shadow-xs hover:shadow-md hover:border-brand-fucsia transition-all p-5 flex flex-col justify-between cursor-pointer group";
                 card.onclick = () => openDetailModal(item.id);
 
                 let areaBadgeClass = "bg-brand-lilaghost text-brand-dark border-brand-lila";
@@ -672,58 +693,12 @@
                 if (item.area === 'Clínica') areaBadgeClass = "bg-brand-celestelight text-brand-celeste border-brand-celestelight";
                 if (item.area === 'Organizacional') areaBadgeClass = "bg-brand-amarillo/30 text-brand-dark border-brand-amarillo/50";
 
-                let contactButtonsHtml = '';
-                if (item.contacto_email) {
-                    contactButtonsHtml += `
-                        <span class="inline-flex items-center gap-1 text-[11px] font-bold text-brand-fucsia bg-brand-fucsialight px-2 py-1 rounded-lg">
-                            <i class="fa-solid fa-envelope"></i> Correo
-                        </span>
-                    `;
-                }
-                if (item.contacto_telefono) {
-                    contactButtonsHtml += `
-                        <span class="inline-flex items-center gap-1 text-[11px] font-bold text-slate-700 bg-brand-verde/30 px-2 py-1 rounded-lg">
-                            <i class="fa-brands fa-whatsapp"></i> WhatsApp
-                        </span>
-                    `;
-                }
-                if (item.contacto_web) {
-                    contactButtonsHtml += `
-                        <span class="inline-flex items-center gap-1 text-[11px] font-bold text-slate-700 bg-brand-lilaghost px-2 py-1 rounded-lg">
-                            <i class="fa-solid fa-globe"></i> Web
-                        </span>
-                    `;
-                }
-
-                let studentContactBox = '';
-                const allowsContact = item.permitir_contacto === true || item.permitir_contacto === 'si' || item.permitir_contacto === 'true';
-                if (allowsContact && item.proponente_nombre && item.proponente_correo) {
-                    studentContactBox = `
-                                    let validationBadge = '';
                 const isValidated = item.validado_universidad === true || item.validado_universidad === 'si' || item.validado_universidad === 'true';
-
+                let validationBadgeHtml = '';
                 if (isValidated) {
-                    validationBadge = `
-                        <div class="inline-flex items-center gap-1.5 bg-brand-verde/20 border border-brand-verde text-brand-dark px-2.5 py-1.5 rounded-lg text-xs font-bold">
-                            <i class="fa-solid fa-circle-check text-brand-verde text-sm"></i> Validado por UPCH
-                        </div>
-                    `;
-                } else {
-                    validationBadge = `
-                        <div class="inline-flex items-center gap-1.5 bg-red-100 border border-red-300 text-red-700 px-2.5 py-1.5 rounded-lg text-xs font-bold">
-                            <i class="fa-solid fa-circle-xmark text-red-500 text-sm"></i> No validado
-                        </div>
-                    `;
-                }
-                
-                        <div class="mt-3 bg-brand-fucsialight/70 border border-brand-fucsia/30 rounded-xl p-3 text-[11px] text-slate-700 space-y-1">
-                            <div class="font-extrabold text-brand-fucsia flex items-center gap-1">
-                                <i class="fa-solid fa-user-graduate"></i> Estudiante proponente: ${item.proponente_nombre}
-                            </div>
-                            <div class="text-slate-600 truncate flex items-center gap-1">
-                                <i class="fa-solid fa-envelope text-brand-funcsia"></i> 
-                                <span class="underline font-semibold">${item.proponente_correo}</span>
-                            </div>
+                    validationBadgeHtml = `
+                        <div class="inline-flex items-center gap-1 bg-brand-verde/20 border border-brand-verde text-brand-dark px-2.5 py-1 rounded-lg text-[11px] font-bold">
+                            <i class="fa-solid fa-circle-check text-brand-verde"></i> Validado UPCH
                         </div>
                     `;
                 }
@@ -738,9 +713,9 @@
                                 ${item.modalidad}
                             </span>
                         </div>
-                        
-                        <div>${validationBadge}</div>
-                        
+
+                        ${validationBadgeHtml}
+
                         <div>
                             <h4 class="text-base font-extrabold text-brand-dark leading-snug group-hover:text-brand-fucsia transition-colors">${item.puesto}</h4>
                             <p class="text-xs font-bold text-brand-fucsia mt-0.5"><i class="fa-solid fa-building mr-1"></i> ${item.institucion}</p>
@@ -749,8 +724,6 @@
                         <p class="text-xs text-slate-600 line-clamp-3 leading-relaxed font-medium">
                             ${item.descripcion}
                         </p>
-
-                        ${studentContactBox}
                     </div>
 
                     <div class="pt-4 mt-4 border-t border-brand-lila/30 space-y-2">
@@ -768,7 +741,6 @@
             });
         }
 
-        // FUNCIONES PARA EL MODAL DE DETALLES COMPLETOS
         function openDetailModal(id) {
             const item = rawData.find(i => String(i.id) === String(id));
             if (!item) return;
@@ -781,7 +753,18 @@
             document.getElementById('modal-detail-ubicacion').innerText = item.ubicacion || 'No especificada';
             document.getElementById('modal-detail-descripcion').innerText = item.descripcion || 'Sin descripción detallada.';
 
-            // Generar botones de contacto institucional en el modal
+            const isValidated = item.validado_universidad === true || item.validado_universidad === 'si' || item.validado_universidad === 'true';
+            const validationBadgeContainer = document.getElementById('modal-detail-validation-badge');
+            if (isValidated) {
+                validationBadgeContainer.innerHTML = `
+                    <span class="text-xs font-bold px-3 py-1 rounded-full bg-brand-verde/20 text-brand-dark border border-brand-verde flex items-center gap-1">
+                        <i class="fa-solid fa-circle-check text-brand-verde"></i> Validado por UPCH
+                    </span>
+                `;
+            } else {
+                validationBadgeContainer.innerHTML = '';
+            }
+
             const contactsContainer = document.getElementById('modal-detail-contacts');
             contactsContainer.innerHTML = '';
             let hasContact = false;
@@ -816,7 +799,6 @@
                 contactsContainer.innerHTML = `<span class="text-xs text-slate-400 italic">No se proporcionaron datos de contacto directo de la institución.</span>`;
             }
 
-            // Datos del estudiante proponente
             const studentBox = document.getElementById('modal-detail-student-box');
             const allowsContact = item.permitir_contacto === true || item.permitir_contacto === 'si' || item.permitir_contacto === 'true';
             
@@ -949,6 +931,9 @@
             document.getElementById('edit-contacto_telefono').value = item.contacto_telefono || '';
             document.getElementById('edit-contacto_web').value = item.contacto_web || '';
 
+            const isValidated = item.validado_universidad === true || item.validado_universidad === 'si' || item.validado_universidad === 'true';
+            document.getElementById('edit-validado_universidad').checked = isValidated;
+
             document.getElementById('edit-modal').classList.remove('hidden');
         }
 
@@ -956,7 +941,7 @@
             document.getElementById('edit-modal').classList.add('hidden');
         }
 
-             function handleEditSubmit(e) {
+        function handleEditSubmit(e) {
             e.preventDefault();
             const id = document.getElementById('edit-id').value;
             const item = rawData.find(i => String(i.id) === String(id));
