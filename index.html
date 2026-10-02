@@ -77,6 +77,11 @@
                         </button>
                     </nav>
 
+                    <!-- Botón Buzón de Sugerencias -->
+                    <button onclick="openSuggestionModal()" class="bg-brand-lilaghost hover:bg-brand-fucsia hover:text-white text-brand-dark text-xs font-extrabold px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 shadow-2xs cursor-pointer">
+                        <i class="fa-solid fa-lightbulb text-brand-amarillo"></i> <span class="hidden sm:inline">Sugerencias</span>
+                    </button>
+
                     <!-- Stylized Role Switcher -->
                     <div class="relative">
                         <div class="flex items-center bg-brand-fucsialight border-2 border-brand-fucsia/40 rounded-2xl p-1 shadow-xs hover:border-brand-fucsia transition-all">
@@ -106,7 +111,7 @@
     </header>
 
     <!-- HERO SECTION -->
-    <section class="bg-gradient-to-br from-white via-brand-fucsialight/40 to-brand-lilaghost py-10 border-b border-brand-lila/40">
+    <section class="bg-gradient-to-br from-white via-brand-fucsialight/40 to-brand-lilaghost py-8 border-b border-brand-lila/40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
                 <span class="inline-block bg-brand-amarillo/30 text-brand-dark text-xs font-extrabold px-3 py-1 rounded-full border border-brand-amarillo/60 mb-3 shadow-2xs">
@@ -134,6 +139,33 @@
         <!-- TAB 1: EXPLORAR OPORTUNIDADES -->
         <section id="view-explorar" class="space-y-6">
             
+            <!-- GUÍA RÁPIDA COLAPSIBLE -->
+            <div class="bg-white rounded-2xl border border-brand-lila/60 shadow-xs overflow-hidden">
+                <div onclick="toggleGuia()" class="bg-gradient-to-r from-brand-fucsialight/70 to-brand-lilaghost/60 px-5 py-3.5 flex justify-between items-center cursor-pointer hover:bg-brand-fucsialight transition-all">
+                    <h3 class="text-xs sm:text-sm font-extrabold text-brand-dark flex items-center gap-2">
+                        <span class="text-base">🧭</span> Guía Rápida: ¿Cómo usar este portal?
+                    </h3>
+                    <span id="guia-toggle-icon" class="text-xs font-bold text-brand-fucsia"><i class="fa-solid fa-chevron-down"></i> Ocultar guía</span>
+                </div>
+                <div id="guia-content" class="p-5 text-xs sm:text-sm text-slate-600 space-y-3 bg-white border-t border-brand-lila/30 leading-relaxed font-medium">
+                    <p>¡Bienvenido/a! Este espacio ha sido creado para centralizar y facilitar el acceso a convocatorias clave para nuestra formación. Sigue estos pasos para aprovecharlo al máximo:</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
+                        <div class="bg-brand-lilaghost/40 p-3.5 rounded-xl border border-brand-lila/40 space-y-1">
+                            <strong class="text-brand-dark block text-xs font-bold"><i class="fa-solid fa-1 text-brand-fucsia mr-1"></i> Explora las categorías</strong>
+                            <span class="text-[11px] text-slate-500 block">Navega por el portal para identificar rápidamente el tipo de oportunidad que buscas (prácticas, voluntariados, cursos, etc.).</span>
+                        </div>
+                        <div class="bg-brand-lilaghost/40 p-3.5 rounded-xl border border-brand-lila/40 space-y-1">
+                            <strong class="text-brand-dark block text-xs font-bold"><i class="fa-solid fa-2 text-brand-fucsia mr-1"></i> Revisa los detalles</strong>
+                            <span class="text-[11px] text-slate-500 block">Haz clic en cada opción para conocer los requisitos, modalidades, fechas límite y enlaces directos de postulación.</span>
+                        </div>
+                        <div class="bg-brand-lilaghost/40 p-3.5 rounded-xl border border-brand-lila/40 space-y-1">
+                            <strong class="text-brand-dark block text-xs font-bold"><i class="fa-solid fa-3 text-brand-fucsia mr-1"></i> Filtra y busca</strong>
+                            <span class="text-[11px] text-slate-500 block">Utiliza las herramientas de búsqueda para encontrar lo que mejor se adapte a tu disponibilidad e intereses actuales.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Filter & Search Controls -->
             <div class="bg-white p-4 sm:p-5 rounded-2xl border border-brand-lila/50 shadow-xs space-y-4">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
@@ -165,8 +197,7 @@
                             <option value="Voluntariado">Voluntariado</option>
                             <option value="Investigación">Investigación</option>
                             <option value="Empleo">Empleo / Practicante Pro</option>
-                            <option value="Desarrollo de Competencias Profesionales">DCP</option>
-
+                            <option value="Desarrollo de Competencias Profesionales"> Desarrollo de Competencias Profesionales</option>
                         </select>
                     </div>
 
@@ -244,8 +275,7 @@
                                 <option value="Voluntariado">Voluntariado</option>
                                 <option value="Investigación">Investigación</option>
                                 <option value="Empleo">Empleo / Practicante Pro</option>
-                                <option value="Desarrollo de Competencias Profesionales">DCP</option>
-
+                                <option value="Desarrollo de Competencias Profesionales"> Desarrollo de Competencias Profesionales</option>
                             </select>
                         </div>
                         <div>
@@ -341,16 +371,16 @@
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-brand-lila/50 shadow-xs">
                 <div>
                     <h3 class="text-lg font-black text-brand-dark flex items-center gap-2">
-                        <i class="fa-solid fa-user-shield text-brand-fucsia"></i> Moderación, Edición y Eliminación CEPS
+                        <i class="fa-solid fa-user-shield text-brand-fucsia"></i> Moderación, Edición y Buzón de Sugerencias
                     </h3>
-                    <p class="text-xs text-slate-500 font-medium mt-0.5">Aprueba solicitudes pendientes, edita o elimina las oportunidades publicadas en el portal.</p>
+                    <p class="text-xs text-slate-500 font-medium mt-0.5">Aprueba oportunidades, gestiona publicaciones y revisa las sugerencias enviadas por los estudiantes.</p>
                 </div>
                 <div class="flex items-center gap-3">
                     <button onclick="loadFromGoogleSheets()" class="bg-brand-lilaghost hover:bg-brand-lila text-brand-dark text-xs font-extrabold px-3 py-2 rounded-xl transition-all cursor-pointer flex items-center gap-1.5 shadow-2xs">
                         <i class="fa-solid fa-rotate"></i> Actualizar Datos
                     </button>
                     <span id="pending-count-badge" class="bg-brand-amarillo/40 text-brand-dark text-xs font-extrabold px-3 py-1.5 rounded-xl border border-brand-amarillo">
-                        0 Solicitudes Pendientes
+                        0 Solicitudes
                     </span>
                 </div>
             </div>
@@ -358,9 +388,17 @@
             <!-- Solicitudes Pendientes -->
             <div class="space-y-4">
                 <h4 class="text-sm font-extrabold text-brand-dark flex items-center gap-2">
-                    <i class="fa-solid fa-clock-rotate-left text-brand-amarillo"></i> Solicitudes Pendientes de Revisión
+                    <i class="fa-solid fa-clock-rotate-left text-brand-amarillo"></i> Oportunidades Pendientes de Revisión
                 </h4>
                 <div id="admin-pending-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+            </div>
+
+            <!-- Buzón de Sugerencias Recibidas -->
+            <div class="space-y-4 pt-4 border-t border-brand-lila/40">
+                <h4 class="text-sm font-extrabold text-brand-dark flex items-center gap-2">
+                    <i class="fa-solid fa-lightbulb text-brand-amarillo"></i> Buzón de Sugerencias de Estudiantes
+                </h4>
+                <div id="admin-suggestions-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
             </div>
 
             <!-- Oportunidades Aprobadas -->
@@ -373,6 +411,36 @@
         </section>
 
     </main>
+
+    <!-- MODAL: BUZÓN DE SUGERENCIAS -->
+    <div id="suggestion-modal" class="hidden fixed inset-0 bg-brand-dark/50 backdrop-blur-xs z-50 flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl space-y-5 border border-brand-lila/60 relative">
+            <button onclick="closeSuggestionModal()" class="absolute top-6 right-6 text-slate-400 hover:text-brand-dark w-9 h-9 rounded-full flex items-center justify-center bg-brand-lilaghost/60 hover:bg-brand-lilaghost transition-all">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="space-y-1">
+                <span class="bg-brand-amarillo/30 text-brand-dark text-[10px] font-black px-2.5 py-1 rounded-full border border-brand-amarillo/60 uppercase tracking-wider">Buzón Abierto</span>
+                <h3 class="text-xl font-black text-brand-dark">¡Ayúdanos a mejorar el portal!</h3>
+                <p class="text-xs text-slate-600 font-medium leading-relaxed">¿Tienes alguna idea, función nueva que te gustaría ver o comentario? Escríbenos y el equipo de CEPS lo tomará en cuenta.</p>
+            </div>
+
+            <form id="suggestion-form" onsubmit="handleSuggestionSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1">Tu Nombre o Seudónimo (Opcional)</label>
+                    <input type="text" id="sug-nombre" placeholder="Ej. Anónimo o Estudiante 10mo ciclo" class="w-full p-3 bg-brand-lilaghost/40 border border-brand-lila/60 rounded-xl text-xs font-medium focus:outline-none focus:border-brand-fucsia focus:bg-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1">Tu Sugerencia o Comentario *</label>
+                    <textarea id="sug-texto" rows="4" required placeholder="Me gustaría que se agregue un filtro por distrito, o una sección para..." class="w-full p-3 bg-brand-lilaghost/40 border border-brand-lila/60 rounded-xl text-xs font-medium focus:outline-none focus:border-brand-fucsia focus:bg-white"></textarea>
+                </div>
+                <div class="pt-2 flex justify-end gap-2">
+                    <button type="button" onclick="closeSuggestionModal()" class="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100">Cancelar</button>
+                    <button type="submit" class="px-5 py-2.5 bg-brand-fucsia text-white font-extrabold rounded-xl text-xs hover:bg-brand-fucsia/90 shadow-xs transition-all">Enviar Sugerencia</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- DETAIL MODAL (VER INFORMACIÓN COMPLETA) -->
     <div id="detail-modal" class="hidden fixed inset-0 bg-brand-dark/50 backdrop-blur-xs z-50 flex items-center justify-center p-4 overflow-y-auto">
@@ -474,8 +542,7 @@
                             <option value="Voluntariado">Voluntariado</option>
                             <option value="Investigación">Investigación</option>
                             <option value="Empleo">Empleo / Practicante Pro</option>
-                            <option value="Desarrollo de Competencias Profesionales">DCP</option>
-
+                            <option value="Desarrollo de Competencias Profesionales"> Desarrollo de Competencias Profesionales</option>
                         </select>
                     </div>
                     <div>
@@ -547,7 +614,7 @@
     <!-- JAVASCRIPT LOGIC -->
     <script>
         const ADMIN_PIN = "ceps2026";
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyQOX3wTGbGVSWIlO867GY9E8jZ-rJ8cHaxKRwfgEeqIlnM_GC6nqzKxoFI_fjpRI-v/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzzk9cThmashkng78RN60hUHSXV8YeYLEHMGyy2YXILVatGPmFBxsEFL8eb5UKM3yqh/exec";
 
         let rawData = [];
         let currentRole = 'estudiante';
@@ -643,13 +710,84 @@
             loadFromGoogleSheets();
         }
 
+        // FUNCIONES DE LA GUÍA RÁPIDA
+        function toggleGuia() {
+            const content = document.getElementById('guia-content');
+            const icon = document.getElementById('guia-toggle-icon');
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.innerHTML = '<i class="fa-solid fa-chevron-down"></i> Ocultar guía';
+            } else {
+                content.classList.add('hidden');
+                icon.innerHTML = '<i class="fa-solid fa-chevron-right"></i> Mostrar guía';
+            }
+        }
+
+        // FUNCIONES DEL BUZÓN DE SUGERENCIAS
+        function openSuggestionModal() {
+            document.getElementById('suggestion-modal').classList.remove('hidden');
+        }
+
+        function closeSuggestionModal() {
+            document.getElementById('suggestion-modal').classList.add('hidden');
+        }
+
+        async function handleSuggestionSubmit(e) {
+            e.preventDefault();
+            const nombre = document.getElementById('sug-nombre').value || "Estudiante anónimo";
+            const texto = document.getElementById('sug-texto').value;
+
+            const suggestionData = {
+                id: Date.now().toString(),
+                institucion: "BUZÓN DE SUGERENCIA",
+                puesto: nombre,
+                area: "Sugerencia",
+                tipo: "Feedback",
+                modalidad: "Virtual",
+                ubicacion: "Portal Web",
+                descripcion: texto,
+                contacto_email: "",
+                contacto_telefono: "",
+                contacto_web: "",
+                proponente_nombre: nombre,
+                proponente_correo: "",
+                proponente_telefono: "",
+                permitir_contacto: "no",
+                validado_universidad: "no",
+                estado: "sugerencia",
+                fecha: new Date().toISOString().split('T')[0]
+            };
+
+            rawData.push(suggestionData);
+
+            try {
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(suggestionData)
+                });
+                showToast("¡Gracias! Tu sugerencia ha sido enviada con éxito.");
+            } catch (error) {
+                console.error("Error al enviar sugerencia:", error);
+                showToast("Sugerencia guardada localmente");
+            }
+
+            document.getElementById('suggestion-form').reset();
+            closeSuggestionModal();
+        }
+
         function applyFilters() {
             const search = document.getElementById('search-input').value.toLowerCase();
             const area = document.getElementById('filter-area').value;
             const tipo = document.getElementById('filter-tipo').value;
             const modalidad = document.getElementById('filter-modalidad').value;
 
-            const approvedList = rawData.filter(item => String(item.estado).trim().toLowerCase() === 'aprobado');
+            // Filtrar solo aprobados (excluyendo sugerencias del panel principal)
+            const approvedList = rawData.filter(item => 
+                String(item.estado).trim().toLowerCase() === 'aprobado' && 
+                String(item.area).trim() !== 'Sugerencia'
+            );
 
             const filtered = approvedList.filter(item => {
                 const matchesSearch = (item.institucion || '').toLowerCase().includes(search) ||
@@ -666,7 +804,6 @@
             renderGrid(filtered);
         }
 
-        // FUNCIÓN PARA QUITAR TODOS LOS FILTROS
         function resetFilters() {
             document.getElementById('search-input').value = '';
             document.getElementById('filter-area').value = '';
@@ -829,41 +966,38 @@
         function renderAdminPanel() {
             if (currentRole !== 'ceps') return;
             const pendingList = rawData.filter(i => String(i.estado).trim().toLowerCase() === 'pendiente');
-            const approvedList = rawData.filter(i => String(i.estado).trim().toLowerCase() === 'aprobado');
+            const approvedList = rawData.filter(i => String(i.estado).trim().toLowerCase() === 'aprobado' && String(i.area).trim() !== 'Sugerencia');
+            const suggestionsList = rawData.filter(i => String(i.estado).trim().toLowerCase() === 'sugerencia' || String(i.area).trim() === 'Sugerencia');
 
             const pendingGrid = document.getElementById('admin-pending-grid');
             const approvedGrid = document.getElementById('admin-approved-grid');
+            const suggestionsGrid = document.getElementById('admin-suggestions-grid');
             const pendingBadge = document.getElementById('pending-badge');
             const pendingCountBadge = document.getElementById('pending-count-badge');
 
-            if (pendingList.length > 0) {
-                pendingBadge.innerText = pendingList.length;
+            const totalPending = pendingList.length + suggestionsList.length;
+            if (totalPending > 0) {
+                pendingBadge.innerText = totalPending;
                 pendingBadge.classList.remove('hidden');
             } else {
                 pendingBadge.classList.add('hidden');
             }
 
-            pendingCountBadge.innerText = `${pendingList.length} Solicitudes Pendientes`;
+            pendingCountBadge.innerText = `${totalPending} Solicitudes / Sugerencias`;
             pendingGrid.innerHTML = '';
             approvedGrid.innerHTML = '';
+            suggestionsGrid.innerHTML = '';
 
+            // Renderizar Pendientes
             if (pendingList.length === 0) {
-                pendingGrid.innerHTML = `
-                    <div class="col-span-full bg-white p-6 rounded-2xl border border-dashed border-slate-300 text-center">
-                        <i class="fa-solid fa-circle-check text-2xl text-brand-verde mb-1"></i>
-                        <h4 class="text-xs font-extrabold text-brand-dark">No hay solicitudes pendientes</h4>
-                    </div>
-                `;
+                pendingGrid.innerHTML = `<div class="col-span-full bg-white p-5 rounded-2xl border border-dashed border-slate-300 text-center text-xs text-slate-400">No hay oportunidades pendientes.</div>`;
             } else {
                 pendingList.forEach(item => {
                     const card = document.createElement('div');
                     card.className = "bg-white rounded-2xl border border-brand-amarillo p-5 shadow-xs flex flex-col justify-between space-y-3";
                     card.innerHTML = `
                         <div class="space-y-1.5">
-                            <div class="flex justify-between items-start">
-                                <span class="bg-brand-amarillo/30 text-brand-dark text-[10px] font-black px-2 py-0.5 rounded-md border border-brand-amarillo">PENDIENTE</span>
-                                <span class="text-[10px] text-slate-400">${item.fecha || ''}</span>
-                            </div>
+                            <span class="bg-brand-amarillo/30 text-brand-dark text-[10px] font-black px-2 py-0.5 rounded-md border border-brand-amarillo">PENDIENTE</span>
                             <h4 class="font-extrabold text-sm text-brand-dark">${item.puesto}</h4>
                             <p class="text-xs font-bold text-brand-fucsia">${item.institucion}</p>
                             <p class="text-xs text-slate-600 line-clamp-2">${item.descripcion}</p>
@@ -884,12 +1018,35 @@
                 });
             }
 
+            // Renderizar Sugerencias
+            if (suggestionsList.length === 0) {
+                suggestionsGrid.innerHTML = `<div class="col-span-full bg-white p-5 rounded-2xl border border-dashed border-slate-300 text-center text-xs text-slate-400">Aún no hay sugerencias en el buzón.</div>`;
+            } else {
+                suggestionsList.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = "bg-white rounded-2xl border border-brand-amarillo/50 p-4 shadow-xs flex flex-col justify-between space-y-3";
+                    card.innerHTML = `
+                        <div class="space-y-1.5">
+                            <div class="flex justify-between items-center">
+                                <span class="bg-brand-amarillo/20 text-brand-dark text-[10px] font-black px-2 py-0.5 rounded-md">SUGERENCIA</span>
+                                <span class="text-[10px] text-slate-400">${item.fecha || ''}</span>
+                            </div>
+                            <p class="text-xs font-bold text-brand-fucsia"><i class="fa-solid fa-user mr-1"></i> ${item.proponente_nombre || 'Anónimo'}</p>
+                            <p class="text-xs text-slate-700 font-medium bg-brand-lilaghost/30 p-3 rounded-xl">${item.descripcion}</p>
+                        </div>
+                        <div class="pt-2 border-t border-slate-100 flex justify-end">
+                            <button onclick="deleteOpportunity('${item.id}')" class="bg-red-50 hover:bg-red-500 hover:text-white text-red-600 font-extrabold text-[11px] px-3 py-1.5 rounded-xl transition-all cursor-pointer flex items-center gap-1">
+                                <i class="fa-solid fa-trash"></i> Eliminar
+                            </button>
+                        </div>
+                    `;
+                    suggestionsGrid.appendChild(card);
+                });
+            }
+
+            // Renderizar Aprobadas
             if (approvedList.length === 0) {
-                approvedGrid.innerHTML = `
-                    <div class="col-span-full bg-white p-6 rounded-2xl border border-dashed border-slate-300 text-center">
-                        <p class="text-xs text-slate-400">No hay oportunidades publicadas actualmente.</p>
-                    </div>
-                `;
+                approvedGrid.innerHTML = `<div class="col-span-full bg-white p-5 rounded-2xl border border-dashed border-slate-300 text-center text-xs text-slate-400">No hay oportunidades publicadas.</div>`;
             } else {
                 approvedList.forEach(item => {
                     const card = document.createElement('div');
@@ -973,10 +1130,10 @@
         }
 
         function deleteOpportunity(id) {
-            if (confirm('¿Estás segura de que deseas eliminar esta oportunidad permanentemente?')) {
+            if (confirm('¿Estás segura de que deseas eliminar este elemento permanentemente?')) {
                 rawData = rawData.filter(i => String(i.id) !== String(id));
                 syncToGoogleSheets();
-                showToast("Oportunidad eliminada de Google Sheets");
+                showToast("Elemento eliminado correctamente");
                 closeEditModal();
                 renderAll();
             }
